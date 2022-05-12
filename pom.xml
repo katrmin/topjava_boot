@@ -12,7 +12,7 @@
     <artifactId>bootjava</artifactId>
     <version>1.0</version>
     <name>BootJava</name>
-    <description>Spring Boot 2.x HATEOAS application (BootJava)</description>
+    <description>Restaurant Voting</description>
     <url>https://javaops.ru/view/bootjava</url>
 
     <properties>
@@ -101,6 +101,24 @@
             <artifactId>junit-platform-launcher</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>net.lbruun.springboot</groupId>
+            <artifactId>preliquibase-spring-boot-starter</artifactId>
+            <version> 1.1.1  </version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.22</version>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
