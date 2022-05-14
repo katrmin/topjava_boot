@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import ru.javaops.topjava.util.validation.NoHtml;
 
 import javax.persistence.Column;
@@ -11,7 +12,7 @@ import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-
+@SuperBuilder
 @MappedSuperclass
 @Getter
 @Setter
@@ -24,7 +25,7 @@ public abstract class NamedEntity extends BaseEntity {
     @NoHtml
     protected String name;
 
-    protected NamedEntity(Integer id, String name) {
+    protected NamedEntity(Long id, String name) {
         super(id);
         this.name = name;
     }

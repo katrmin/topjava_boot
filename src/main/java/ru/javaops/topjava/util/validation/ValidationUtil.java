@@ -16,7 +16,7 @@ public class ValidationUtil {
     }
 
     //  Conservative when you reply, but accept liberally (http://stackoverflow.com/a/32728226/548473)
-    public static void assureIdConsistent(HasId bean, int id) {
+    public static void assureIdConsistent(HasId bean, Long id) {
         if (bean.isNew()) {
             bean.setId(id);
         } else if (bean.id() != id) {
@@ -24,7 +24,7 @@ public class ValidationUtil {
         }
     }
 
-    public static void checkModification(int count, int id) {
+    public static void checkModification(Long count, Long id) {
         if (count == 0) {
             throw new IllegalRequestDataException("Entity with id=" + id + " not found");
         }

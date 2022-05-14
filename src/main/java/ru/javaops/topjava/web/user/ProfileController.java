@@ -8,11 +8,18 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import ru.javaops.topjava.dto.UserDto;
+import ru.javaops.topjava.mapper.UserMapper;
 import ru.javaops.topjava.model.User;
-import ru.javaops.topjava.to.UserTo;
-import ru.javaops.topjava.util.UserUtil;
 import ru.javaops.topjava.web.AuthUser;
 
 import javax.validation.Valid;
@@ -43,10 +50,10 @@ public class ProfileController extends AbstractUserController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     @CacheEvict(allEntries = true)
-    public ResponseEntity<User> register(@Valid @RequestBody UserTo userTo) {
-        log.info("register {}", userTo);
-        checkNew(userTo);
-        User created = prepareAndSave(UserUtil.createNewFromTo(userTo));
+    public ResponseEntity<User> register(@Valid @RequestBody UserDto userDto) {
+        log.info("register {}", userDto);
+        checkNew(userDto);
+        User created = save(UserMapper.map(userDto));
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL).build().toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
@@ -56,14 +63,14 @@ public class ProfileController extends AbstractUserController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Transactional
     @CacheEvict(allEntries = true)
-    public void update(@RequestBody @Valid UserTo userTo, @AuthenticationPrincipal AuthUser authUser) {
-        assureIdConsistent(userTo, authUser.id());
+    public void update(@RequestBody @Valid UserDto userDto, @AuthenticationPrincipal AuthUser authUser) {
+        assureIdConsistent(userDto, authUser.id());
         User user = authUser.getUser();
-        prepareAndSave(UserUtil.updateFromTo(user, userTo));
+        save(UserMapper.updateFromDto(user, userDto));
     }
 
-    @GetMapping("/with-meals")
-    public ResponseEntity<User> getWithMeals(@AuthenticationPrincipal AuthUser authUser) {
-        return super.getWithMeals(authUser.id());
-    }
+//    @GetMapping("/with-meals")
+//    public ResponseEntity<User> getWithMeals(@AuthenticationPrincipal AuthUser authUser) {
+//        return super.getWithMeals(authUser.id());
+//    }
 }

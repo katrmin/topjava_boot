@@ -8,7 +8,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import ru.javaops.topjava.model.User;
 import ru.javaops.topjava.repository.UserRepository;
-import ru.javaops.topjava.util.UserUtil;
 
 @Slf4j
 public abstract class AbstractUserController {
@@ -24,23 +23,23 @@ public abstract class AbstractUserController {
         binder.addValidators(emailValidator);
     }
 
-    public ResponseEntity<User> get(int id) {
+    public ResponseEntity<User> get(Long id) {
         log.info("get {}", id);
         return ResponseEntity.of(repository.findById(id));
     }
 
     @CacheEvict(value = "users", allEntries = true)
-    public void delete(int id) {
+    public void delete(Long id) {
         log.info("delete {}", id);
         repository.deleteExisted(id);
     }
 
-    public ResponseEntity<User> getWithMeals(int id) {
-        log.info("getWithMeals {}", id);
-        return ResponseEntity.of(repository.getWithMeals(id));
-    }
+//    public ResponseEntity<User> getWithMeals(int id) {
+//        log.info("getWithMeals {}", id);
+//        return ResponseEntity.of(repository.getWithMeals(id));
+//    }
 
-    protected User prepareAndSave(User user) {
-        return repository.save(UserUtil.prepareToSave(user));
+    protected User save(User user) {
+        return repository.save(user);
     }
 }

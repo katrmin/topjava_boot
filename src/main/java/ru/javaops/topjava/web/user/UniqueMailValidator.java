@@ -10,6 +10,7 @@ import ru.javaops.topjava.repository.UserRepository;
 import ru.javaops.topjava.web.SecurityUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
 
 @Component
 @AllArgsConstructor
@@ -31,10 +32,10 @@ public class UniqueMailValidator implements org.springframework.validation.Valid
             repository.findByEmailIgnoreCase(user.getEmail())
                     .ifPresent(dbUser -> {
                         if (request.getMethod().equals("PUT")) {  // UPDATE
-                            int dbId = dbUser.id();
+                            Long dbId = dbUser.id();
 
                             // it is ok, if update ourself
-                            if (user.getId() != null && dbId == user.id()) return;
+                            if (user.getId() != null && Objects.equals(dbId, user.id())) return;
 
                             // Workaround for update with user.id=null in request body
                             // ValidationUtil.assureIdConsistent called after this validation
