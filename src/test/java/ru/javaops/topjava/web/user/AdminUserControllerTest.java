@@ -2,7 +2,6 @@ package ru.javaops.topjava.web.user;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.javaops.topjava.repository.UserRepository;
@@ -69,16 +68,6 @@ class AdminUserControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    @WithUserDetails(value = ADMIN_MAIL)
-    void enableNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.patch(REST_URL + NOT_FOUND)
-                .param("enabled", "false")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isUnprocessableEntity());
-    }
-
-    @Test
     void getUnAuth() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isUnauthorized());
@@ -128,28 +117,6 @@ class AdminUserControllerTest extends AbstractControllerTest {
 //                .andExpect(status().isOk())
 //                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 //                .andExpect(USER_MATCHER.contentJson(admin, guest, user));
-//    }
-
-//    @Test
-//    @WithUserDetails(value = ADMIN_MAIL)
-//    void enable() throws Exception {
-//        perform(MockMvcRequestBuilders.patch(REST_URL + USER_ID)
-//                .param("enabled", "false")
-//                .contentType(MediaType.APPLICATION_JSON))
-//                .andDo(print())
-//                .andExpect(status().isNoContent());
-//
-//        assertFalse(userRepository.getById(USER_ID).isEnabled());
-//    }
-
-//    @Test
-//    @WithUserDetails(value = ADMIN_MAIL)
-//    void getWithMeals() throws Exception {
-//        perform(MockMvcRequestBuilders.get(REST_URL + ADMIN_ID + "/with-meals"))
-//                .andExpect(status().isOk())
-//                .andDo(print())
-//                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-//                .andExpect(USER_WITH_MEALS_MATCHER.contentJson(admin));
 //    }
 
 //    @Test

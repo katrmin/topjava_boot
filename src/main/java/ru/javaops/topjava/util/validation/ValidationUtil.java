@@ -6,6 +6,8 @@ import org.springframework.lang.NonNull;
 import ru.javaops.topjava.HasId;
 import ru.javaops.topjava.error.IllegalRequestDataException;
 
+import java.util.Objects;
+
 @UtilityClass
 public class ValidationUtil {
 
@@ -19,12 +21,12 @@ public class ValidationUtil {
     public static void assureIdConsistent(HasId bean, Long id) {
         if (bean.isNew()) {
             bean.setId(id);
-        } else if (bean.id() != id) {
+        } else if (!Objects.equals(bean.id(), id)) {
             throw new IllegalRequestDataException(bean.getClass().getSimpleName() + " must has id=" + id);
         }
     }
 
-    public static void checkModification(Long count, Long id) {
+    public static void checkModification(Integer count, Long id) {
         if (count == 0) {
             throw new IllegalRequestDataException("Entity with id=" + id + " not found");
         }

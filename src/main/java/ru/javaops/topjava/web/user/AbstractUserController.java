@@ -31,13 +31,9 @@ public abstract class AbstractUserController {
     @CacheEvict(value = "users", allEntries = true)
     public void delete(Long id) {
         log.info("delete {}", id);
-        repository.deleteExisted(id);
+        User user = repository.getById(id);
+        repository.delete(user);
     }
-
-//    public ResponseEntity<User> getWithMeals(int id) {
-//        log.info("getWithMeals {}", id);
-//        return ResponseEntity.of(repository.getWithMeals(id));
-//    }
 
     protected User save(User user) {
         return repository.save(user);

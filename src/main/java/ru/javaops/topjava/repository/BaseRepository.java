@@ -16,7 +16,7 @@ public interface BaseRepository<T> extends JpaRepository<T, Long> {
     @Transactional
     @Modifying
     @Query("DELETE FROM #{#entityName} u WHERE u.id=:id")
-    Long delete(Long id);
+    Integer delete(Long id);
 
     default void deleteExisted(Long id) {
         checkModification(delete(id), id);
