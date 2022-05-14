@@ -1,7 +1,9 @@
 package ru.javaops.topjava.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,13 +12,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "RESTAURANTS")
 @Getter
 @Setter
+@SuperBuilder
+@NoArgsConstructor
 public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,5 +30,5 @@ public class Restaurant {
     private String name;
 
     @OneToMany(mappedBy = "restaurant")
-    private Set<MenuRestaurantDish> menuRestaurantDishes = new LinkedHashSet<>();
+    private List<MenuRestaurantDish> menuRestaurantDishes;
 }

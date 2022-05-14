@@ -10,15 +10,15 @@ import static ru.javaops.topjava.util.validation.ValidationUtil.checkModificatio
 
 // https://stackoverflow.com/questions/42781264/multiple-base-repositories-in-spring-data-jpa
 @NoRepositoryBean
-public interface BaseRepository<T> extends JpaRepository<T, Integer> {
+public interface BaseRepository<T> extends JpaRepository<T, Long> {
 
     //    https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query.spel-expressions
     @Transactional
     @Modifying
     @Query("DELETE FROM #{#entityName} u WHERE u.id=:id")
-    int delete(int id);
+    Long delete(Long id);
 
-    default void deleteExisted(int id) {
+    default void deleteExisted(Long id) {
         checkModification(delete(id), id);
     }
 }

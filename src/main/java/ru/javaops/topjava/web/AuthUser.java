@@ -3,11 +3,9 @@ package ru.javaops.topjava.web;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.lang.NonNull;
-import org.springframework.security.core.GrantedAuthority;
 import ru.javaops.topjava.model.User;
 import ru.javaops.topjava.model.UserRole;
 
-import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 @Getter
@@ -24,7 +22,7 @@ public class AuthUser extends org.springframework.security.core.userdetails.User
         this.user = user;
     }
 
-    public int id() {
+    public Long id() {
         return user.id();
     }
 }

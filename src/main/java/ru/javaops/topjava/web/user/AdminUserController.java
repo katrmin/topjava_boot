@@ -8,8 +8,16 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javaops.topjava.model.User;
 
@@ -31,19 +39,19 @@ public class AdminUserController extends AbstractUserController {
 
     @Override
     @GetMapping("/{id}")
-    public ResponseEntity<User> get(@PathVariable int id) {
+    public ResponseEntity<User> get(@PathVariable Long id) {
         return super.get(id);
     }
 
-    @GetMapping("/{id}/with-meals")
-    public ResponseEntity<User> getWithMeals(@PathVariable int id) {
-        return super.getWithMeals(id);
-    }
+//    @GetMapping("/{id}/with-meals")
+//    public ResponseEntity<User> getWithMeals(@PathVariable int id) {
+//        return super.getWithMeals(id);
+//    }
 
     @Override
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable int id) {
+    public void delete(@PathVariable Long id) {
         super.delete(id);
     }
 
@@ -59,7 +67,7 @@ public class AdminUserController extends AbstractUserController {
     public ResponseEntity<User> createWithLocation(@Valid @RequestBody User user) {
         log.info("create {}", user);
         checkNew(user);
-        User created = prepareAndSave(user);
+        User created = save(user);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
@@ -69,25 +77,15 @@ public class AdminUserController extends AbstractUserController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @CacheEvict(allEntries = true)
-    public void update(@Valid @RequestBody User user, @PathVariable int id) {
+    public void update(@Valid @RequestBody User user, @PathVariable Long id) {
         log.info("update {} with id={}", user, id);
         assureIdConsistent(user, id);
-        prepareAndSave(user);
+        save(user);
     }
 
     @GetMapping("/by-email")
     public ResponseEntity<User> getByEmail(@RequestParam String email) {
         log.info("getByEmail {}", email);
         return ResponseEntity.of(repository.findByEmailIgnoreCase(email));
-    }
-
-    @PatchMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Transactional
-    @CacheEvict(allEntries = true)
-    public void enable(@PathVariable int id, @RequestParam boolean enabled) {
-        log.info(enabled ? "enable {}" : "disable {}", id);
-        User user = repository.getById(id);
-        user.setEnabled(enabled);
     }
 }

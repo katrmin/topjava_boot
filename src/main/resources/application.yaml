@@ -23,7 +23,7 @@ spring:
     #    url: jdbc:h2:C:/projects/bootjava/db/topjava
     #    tcp: jdbc:h2:tcp://localhost:9092/C:/projects/bootjava/db/topjava
     # Relative path form current dir
-    url: jdbc:h2:./db/topjava/${spring.jpa.properties.hibernate.default_schema}
+    url: jdbc:h2:./db/topjava/${spring.jpa.properties.hibernate.default_schema};DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE
     # Relative path from home
     #    url: jdbc:h2:~/topjava
     #    tcp: jdbc:h2:tcp://localhost:9092/~/topjava

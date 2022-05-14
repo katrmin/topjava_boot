@@ -22,7 +22,7 @@ import ru.javaops.topjava.web.AuthUser;
 
 import java.util.Optional;
 
-import static ru.javaops.topjava.util.UserUtil.PASSWORD_ENCODER;
+import static ru.javaops.topjava.mapper.UserMapper.PASSWORD_ENCODER;
 
 @Configuration
 @EnableWebSecurity
