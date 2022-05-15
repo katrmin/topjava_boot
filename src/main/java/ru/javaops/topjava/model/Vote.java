@@ -15,7 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "VOTES")
@@ -39,5 +39,5 @@ public class Vote {
     private Restaurant restaurant;
 
     @Column(name = "DATE_TIME")
-    private Instant dateTime;
+    private LocalDateTime dateTime;
 }
