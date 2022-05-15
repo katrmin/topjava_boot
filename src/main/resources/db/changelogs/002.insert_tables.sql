@@ -1,20 +1,22 @@
 --liquibase formatted sql
-
+SET SCHEMA VREST;
 --changeset Minaeva E.A.:002.insert_tables.sql
 INSERT INTO USERS (NAME, EMAIL, PASSWORD)
 VALUES ('User', 'user@yandex.ru', '{noop}password'),
        ('Admin', 'admin@gmail.com', '{noop}admin'),
-       ('Guest', 'guest@gmail.com', '{noop}guest');
+       ('Guest', 'guest@gmail.com', '{noop}guest'),
+       ('Root', 'root@gmail.com', '123');
 
 INSERT INTO USER_ROLES (ROLE, USER_ID)
 VALUES ('USER', 1),
        ('ADMIN', 2),
-       ('USER', 2);
+       ('USER', 2),
+       ('USER', 4);
 
 insert into RESTAURANTS(name)
 values ('Первый ресторан'),
-        ('Второй ресторан'),
-        ('Третий ресторан');
+       ('Второй ресторан'),
+       ('Третий ресторан');
 
 INSERT INTO DISHES (name)
 VALUES ('Яичница-глазунья'),

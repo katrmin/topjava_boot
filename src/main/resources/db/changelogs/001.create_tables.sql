@@ -1,6 +1,7 @@
 --liquibase formatted sql
 
 --changeset Minaeva E.A.:001.create_tables.sql-1
+SET SCHEMA VREST;
 create table USERS
 (
     id       bigint auto_increment PRIMARY KEY,

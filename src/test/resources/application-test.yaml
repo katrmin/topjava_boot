@@ -1,12 +1,5 @@
 spring:
-  jpa:
-    properties:
-      #  http://docs.jboss.org/hibernate/orm/5.3/userguide/html_single/Hibernate_User_Guide.html#configurations
-      hibernate:
-        default_schema: public
   cache:
     type: none
   datasource:
   url: jdbc:h2:./db/topjava/test_db;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE
-  liquibase:
-    default-schema: public

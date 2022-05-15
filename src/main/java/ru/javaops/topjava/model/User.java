@@ -10,7 +10,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -29,5 +28,5 @@ public class User extends NamedEntity{
 
     @OneToMany(mappedBy = "user")
     @ToString.Exclude
-    private Set<UserRole> roles = new LinkedHashSet<>();
+    private Set<UserRole> roles;
 }

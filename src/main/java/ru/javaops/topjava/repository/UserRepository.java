@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Transactional(readOnly = true)
 public interface UserRepository extends BaseRepository<User> {
-
+    @EntityGraph(attributePaths = {"roles"}, type = EntityGraph.EntityGraphType.FETCH)
     @Query("SELECT u FROM User u WHERE u.email = LOWER(:email)")
     Optional<User> findByEmailIgnoreCase(String email);
 
