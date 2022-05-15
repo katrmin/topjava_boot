@@ -1,13 +1,14 @@
 package ru.javaops.topjava.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,7 +22,7 @@ import java.util.List;
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-@AllArgsConstructor
+@ToString(callSuper = true)
 public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +32,6 @@ public class Restaurant {
     @Column(name = "NAME")
     private String name;
 
-    @OneToMany(mappedBy = "restaurant")
+    @OneToMany(mappedBy = "restaurant", fetch = FetchType.EAGER)
     private List<MenuRestaurantDish> menuRestaurantDishes;
 }

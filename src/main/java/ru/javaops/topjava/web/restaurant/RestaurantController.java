@@ -30,7 +30,7 @@ public class RestaurantController {
     static final String REST_URL = "/api";
     private final RestaurantRepository restaurantRepository;
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/admin/restaurants", consumes = MediaType.APPLICATION_JSON_VALUE)
     public RestaurantDto create(@Valid @RequestBody RestaurantDto restaurantDto) {
         return RestaurantMapper.mapToDto(restaurantRepository.save(RestaurantMapper.map(restaurantDto)));
     }
@@ -48,13 +48,13 @@ public class RestaurantController {
         restaurantRepository.deleteExisted(id);
     }
 
-    @GetMapping(value = "/restaurants/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/restaurants/{id}")
     public RestaurantDto get(@PathVariable Long id) {
         log.info("get {}", id);
         return RestaurantMapper.mapToDto(restaurantRepository.getById(id));
     }
 
-    @GetMapping(value = "/restaurants", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/restaurants")
     public List<RestaurantDto> getAll() {
         log.info("getAll");
         return restaurantRepository.findAll(Sort.by("name"))
