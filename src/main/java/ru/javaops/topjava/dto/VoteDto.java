@@ -15,7 +15,7 @@ public class VoteDto {
     @NotNull
     private Long userId;
     @NotNull
-    private MenuRestaurantDishDto menuRestaurantDish;
+    private RestaurantDto restaurant;
     @NotNull
     public Instant dateTime;
 }

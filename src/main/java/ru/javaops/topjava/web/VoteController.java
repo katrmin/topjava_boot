@@ -65,7 +65,7 @@ public class VoteController {
     @GetMapping()
     public List<VoteDto> getAll() {
         log.info("getAll");
-        return voteRepository.findAll(Sort.by("menuRestaurantDish.restaurant.name"))
+        return voteRepository.findAll(Sort.by("restaurant.name"))
                 .stream()
                 .map(VoteMapper::mapToDto)
                 .collect(Collectors.toList());

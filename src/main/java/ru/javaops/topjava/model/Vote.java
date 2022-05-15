@@ -35,8 +35,8 @@ public class Vote {
     private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "MENU_RESTAURANTS_DISHES_ID")
-    private MenuRestaurantDish menuRestaurantDish;
+    @JoinColumn(name = "RESTAURANT_ID")
+    private Restaurant restaurant;
 
     @Column(name = "DATE_TIME")
     private Instant dateTime;

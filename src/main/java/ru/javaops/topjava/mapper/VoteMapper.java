@@ -9,7 +9,7 @@ public class VoteMapper {
         return VoteDto.builder()
                 .id(vote.getId())
                 .userId(vote.getUser().getId())
-                .menuRestaurantDish(MenuRestaurantDishMapper.mapToDto(vote.getMenuRestaurantDish()))
+                .restaurant(RestaurantMapper.mapToDto(vote.getRestaurant()))
                 .dateTime(vote.getDateTime())
                 .build();
     }
@@ -18,9 +18,8 @@ public class VoteMapper {
         return Vote.builder()
                 .id(voteDto.getId())
                 .user(user)
-                .menuRestaurantDish(MenuRestaurantDishMapper.map(voteDto.getMenuRestaurantDish()))
+                .restaurant(RestaurantMapper.map(voteDto.getRestaurant()))
                 .dateTime(voteDto.getDateTime())
                 .build();
-
     }
 }

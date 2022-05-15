@@ -12,7 +12,7 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public interface VoteRepository extends BaseRepository<Vote> {
 
-    @EntityGraph(attributePaths = {"menuRestaurantDish"}, type = EntityGraph.EntityGraphType.FETCH)
+    @EntityGraph(attributePaths = {"restaurant"}, type = EntityGraph.EntityGraphType.FETCH)
     @Query("SELECT u FROM Vote u WHERE u.id=?1 and u.user.id=?2")
     Optional<Vote> get(Long id, Long userId);
 }

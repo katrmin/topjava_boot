@@ -1,7 +1,9 @@
 package ru.javaops.topjava.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import ru.javaops.topjava.util.validation.NoHtml;
 
@@ -11,6 +13,8 @@ import javax.validation.constraints.Size;
 @SuperBuilder
 @Data
 @EqualsAndHashCode(callSuper = true)
+@AllArgsConstructor
+@NoArgsConstructor
 public class NamedDto extends BaseDto {
     @NotBlank
     @Size(min = 2, max = 128)

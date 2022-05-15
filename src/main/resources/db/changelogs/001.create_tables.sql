@@ -48,10 +48,10 @@ create table MENU_RESTAURANTS_DISHES
 --changeset Minaeva E.A.:001.create_tables.sql-6
 create table VOTES
 (
-    id                         bigint auto_increment PRIMARY KEY,
-    user_id                    BIGINT,
-    menu_restaurants_dishes_id BIGINT,
-    date_time                  datetime,
+    id            bigint auto_increment PRIMARY KEY,
+    user_id       BIGINT,
+    restaurant_id BIGINT,
+    date_time     datetime,
     FOREIGN KEY (user_id) REFERENCES USERS (ID),
-    FOREIGN KEY (menu_restaurants_dishes_id) REFERENCES MENU_RESTAURANTS_DISHES (ID)
+    FOREIGN KEY (restaurant_id) REFERENCES RESTAURANTS (ID)
 );
