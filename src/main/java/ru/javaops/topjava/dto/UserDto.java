@@ -2,6 +2,7 @@ package ru.javaops.topjava.dto;
 
 import lombok.EqualsAndHashCode;
 import lombok.Value;
+import lombok.experimental.SuperBuilder;
 import ru.javaops.topjava.HasIdAndEmail;
 import ru.javaops.topjava.util.validation.NoHtml;
 
@@ -9,6 +10,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+@SuperBuilder
 @Value
 @EqualsAndHashCode(callSuper = true)
 public class UserDto extends NamedDto implements HasIdAndEmail {

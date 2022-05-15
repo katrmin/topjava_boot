@@ -25,7 +25,15 @@ public class UserMapper {
     public static User updateFromDto(User user, UserDto userDto) {
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail().toLowerCase());
-        user.setPassword(userDto.getPassword());
+        user.setPassword(PASSWORD_ENCODER.encode(userDto.getPassword()));
         return user;
+    }
+
+    public static UserDto mapToDto(User user) {
+        return UserDto.builder()
+                .name(user.getName())
+                .email(user.getEmail().toLowerCase())
+                .password(PASSWORD_ENCODER.encode(user.getPassword()))
+                .build();
     }
 }

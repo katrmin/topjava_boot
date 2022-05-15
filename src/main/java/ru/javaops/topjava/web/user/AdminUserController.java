@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import ru.javaops.topjava.dto.UserDto;
+import ru.javaops.topjava.mapper.UserMapper;
 import ru.javaops.topjava.model.User;
 
 import javax.validation.Valid;
@@ -77,10 +79,11 @@ public class AdminUserController extends AbstractUserController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @CacheEvict(allEntries = true)
-    public void update(@Valid @RequestBody User user, @PathVariable Long id) {
-        log.info("update {} with id={}", user, id);
-        assureIdConsistent(user, id);
-        save(user);
+    public void update(@Valid @RequestBody UserDto userDto, @PathVariable Long id) {
+        log.info("update {} with id={}", userDto, id);
+        assureIdConsistent(userDto, id);
+        User user = repository.getById(id);
+        save(UserMapper.updateFromDto(user, userDto));
     }
 
     @GetMapping("/by-email")

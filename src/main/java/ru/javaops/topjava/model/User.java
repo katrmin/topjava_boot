@@ -1,9 +1,9 @@
 package ru.javaops.topjava.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
@@ -17,9 +17,9 @@ import java.util.Set;
 @Table(name = "USERS")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
+@ToString(callSuper = true)
 public class User extends NamedEntity{
     @Column(name = "EMAIL")
     private String email;
@@ -28,5 +28,6 @@ public class User extends NamedEntity{
     private String password;
 
     @OneToMany(mappedBy = "user")
+    @ToString.Exclude
     private Set<UserRole> roles = new LinkedHashSet<>();
 }

@@ -2,18 +2,29 @@ package ru.javaops.topjava.web.user;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import ru.javaops.topjava.dto.UserDto;
+import ru.javaops.topjava.mapper.UserMapper;
+import ru.javaops.topjava.model.User;
 import ru.javaops.topjava.repository.UserRepository;
 import ru.javaops.topjava.web.AbstractControllerTest;
+import ru.javaops.topjava.web.MatcherFactory;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static ru.javaops.topjava.web.user.UserTestData.ADMIN_ID;
 import static ru.javaops.topjava.web.user.UserTestData.ADMIN_MAIL;
 import static ru.javaops.topjava.web.user.UserTestData.NOT_FOUND;
 import static ru.javaops.topjava.web.user.UserTestData.USER_ID;
 import static ru.javaops.topjava.web.user.UserTestData.USER_MAIL;
+import static ru.javaops.topjava.web.user.UserTestData.USER_MATCHER;
+import static ru.javaops.topjava.web.user.UserTestData.admin;
+import static ru.javaops.topjava.web.user.UserTestData.getUpdated;
+import static ru.javaops.topjava.web.user.UserTestData.jsonWithPassword;
 
 class AdminUserControllerTest extends AbstractControllerTest {
 
@@ -22,16 +33,16 @@ class AdminUserControllerTest extends AbstractControllerTest {
     @Autowired
     private UserRepository userRepository;
 
-//    @Test
-//    @WithUserDetails(value = ADMIN_MAIL)
-//    void get() throws Exception {
-//        perform(MockMvcRequestBuilders.get(REST_URL + ADMIN_ID))
-//                .andExpect(status().isOk())
-//                .andDo(print())
-//                // https://jira.spring.io/browse/SPR-14472
-//                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-//                .andExpect(USER_MATCHER.contentJson(admin));
-//    }
+    @Test
+    @WithUserDetails(value = ADMIN_MAIL)
+    void get() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL + ADMIN_ID))
+                .andExpect(status().isOk())
+                .andDo(print())
+                // https://jira.spring.io/browse/SPR-14472
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(USER_MATCHER.contentJson(admin));
+    }
 
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
@@ -41,14 +52,14 @@ class AdminUserControllerTest extends AbstractControllerTest {
                 .andExpect(status().isNotFound());
     }
 
-//    @Test
-//    @WithUserDetails(value = ADMIN_MAIL)
-//    void getByEmail() throws Exception {
-//        perform(MockMvcRequestBuilders.get(REST_URL + "by-email?email=" + admin.getEmail()))
-//                .andExpect(status().isOk())
-//                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-//                .andExpect(USER_MATCHER.contentJson(admin));
-//    }
+    @Test
+    @WithUserDetails(value = ADMIN_MAIL)
+    void getByEmail() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL + "by-email?email=" + admin.getEmail()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(USER_MATCHER.contentJson(admin));
+    }
 
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
@@ -80,19 +91,20 @@ class AdminUserControllerTest extends AbstractControllerTest {
                 .andExpect(status().isForbidden());
     }
 
-//    @Test
-//    @WithUserDetails(value = ADMIN_MAIL)
-//    void update() throws Exception {
-//        User updated = getUpdated();
-//        updated.setId(null);
-//        perform(MockMvcRequestBuilders.put(REST_URL + USER_ID)
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(jsonWithPassword(updated, "newPass")))
-//                .andDo(print())
-//                .andExpect(status().isNoContent());
-//
-//        USER_MATCHER.assertMatch(userRepository.getById(USER_ID), getUpdated());
-//    }
+    @Test
+    @WithUserDetails(value = ADMIN_MAIL)
+    void update() throws Exception {
+        UserDto updated = UserMapper.mapToDto(getUpdated());
+        updated.setId(null);
+        perform(MockMvcRequestBuilders.put(REST_URL + USER_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonWithPassword(getUpdated(), "newPass")))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+
+        MatcherFactory.usingIgnoringFieldsComparator(User.class, "roles", "password")
+                .assertMatch(userRepository.getById(USER_ID), getUpdated());
+    }
 
 //    @Test
 //    @WithUserDetails(value = ADMIN_MAIL)
