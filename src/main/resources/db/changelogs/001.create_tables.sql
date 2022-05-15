@@ -38,9 +38,20 @@ create table MENU_RESTAURANTS_DISHES
 (
     id            bigint auto_increment PRIMARY KEY,
     restaurant_id BIGINT,
-    dish_price    DECIMAL(9,2),
+    dish_price    DECIMAL(9, 2),
     dish_id       BIGINT,
     date_time     datetime,
     FOREIGN KEY (dish_id) REFERENCES DISHES (ID),
     FOREIGN KEY (restaurant_id) REFERENCES RESTAURANTS (ID)
+);
+
+--changeset Minaeva E.A.:001.create_tables.sql-6
+create table VOTES
+(
+    id                         bigint auto_increment PRIMARY KEY,
+    user_id                    BIGINT,
+    menu_restaurants_dishes_id BIGINT,
+    date_time                  datetime,
+    FOREIGN KEY (user_id) REFERENCES USERS (ID),
+    FOREIGN KEY (menu_restaurants_dishes_id) REFERENCES MENU_RESTAURANTS_DISHES (ID)
 );

@@ -15,32 +15,28 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
-@Table(name = "MENU_RESTAURANTS_DISHES")
+@Table(name = "VOTES")
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MenuRestaurantDish {
+public class Vote {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "DISH_ID")
-    private Dish dish;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "USER_ID")
+    private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "RESTAURANT_ID")
-    private Restaurant restaurant;
-
-    @Column(name = "DISH_PRICE", precision = 9, scale = 2)
-    private BigDecimal dishPrice;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "MENU_RESTAURANTS_DISHES_ID")
+    private MenuRestaurantDish menuRestaurantDish;
 
     @Column(name = "DATE_TIME")
     private Instant dateTime;

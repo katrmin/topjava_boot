@@ -1,6 +1,9 @@
 package ru.javaops.topjava.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
@@ -8,15 +11,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "DISHES")
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Dish {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +29,6 @@ public class Dish {
     @Column(name = "NAME")
     private String name;
 
-    @OneToMany(mappedBy = "dish")
-    private Set<MenuRestaurantDish> menuRestaurantDishes = new LinkedHashSet<>();
+//    @OneToMany(mappedBy = "dish")
+//    private Set<MenuRestaurantDish> menuRestaurantDishes = new LinkedHashSet<>();
 }

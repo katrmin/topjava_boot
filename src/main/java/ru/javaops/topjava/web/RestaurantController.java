@@ -1,4 +1,4 @@
-package ru.javaops.topjava.web.restaurant;
+package ru.javaops.topjava.web;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.javaops.topjava.dto.RestaurantDto;
+import ru.javaops.topjava.dto.RestaurantWithDishesDto;
 import ru.javaops.topjava.mapper.RestaurantMapper;
 import ru.javaops.topjava.repository.RestaurantRepository;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,7 +53,15 @@ public class RestaurantController {
     @GetMapping(value = "/restaurants/{id}")
     public RestaurantDto get(@PathVariable Long id) {
         log.info("get {}", id);
-        return RestaurantMapper.mapToDto(restaurantRepository.getById(id));
+        return RestaurantMapper.mapToDto(restaurantRepository.get(id).orElseThrow(() ->
+                new EntityNotFoundException(String.format("Restaurant id:%d not found", id))));
+    }
+
+    @GetMapping(value = "/restaurants/with-dishes/{id}")
+    public RestaurantWithDishesDto getWithDishes(@PathVariable Long id) {
+        log.info("getWithDishes {}", id);
+        return RestaurantMapper.mapToDtoWithDishes(restaurantRepository.getWithDishes(id).orElseThrow(() ->
+                new EntityNotFoundException(String.format("Restaurant id:%d not found", id))));
     }
 
     @GetMapping(value = "/restaurants")
