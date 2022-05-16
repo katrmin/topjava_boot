@@ -4,6 +4,8 @@ import ru.javaops.topjava.dto.VoteDto;
 import ru.javaops.topjava.model.User;
 import ru.javaops.topjava.model.Vote;
 
+import java.time.LocalDateTime;
+
 public class VoteMapper {
     public static VoteDto mapToDto(Vote vote) {
         return VoteDto.builder()
@@ -18,8 +20,8 @@ public class VoteMapper {
         return Vote.builder()
                 .id(voteDto.getId())
                 .user(user)
-                .restaurant(RestaurantMapper.map(voteDto.getRestaurant()))
-                .dateTime(voteDto.getDateTime())
+                .restaurant(RestaurantMapper.idMap(voteDto.getRestaurant()))
+                .dateTime(voteDto.getDateTime() != null ? voteDto.getDateTime() : LocalDateTime.now())
                 .build();
     }
 }

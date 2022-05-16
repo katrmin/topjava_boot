@@ -14,6 +14,12 @@ public class RestaurantMapper {
                 .build();
     }
 
+    public static Restaurant idMap(RestaurantDto restaurantDto) {
+        return Restaurant.builder()
+                .id(restaurantDto.getId())
+                .build();
+    }
+
     public static RestaurantDto mapToDto(Restaurant restaurant) {
         return RestaurantDto.builder()
                 .name(restaurant.getName())

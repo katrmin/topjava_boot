@@ -43,7 +43,7 @@ public class RestaurantController {
         return RestaurantMapper.mapToDto(restaurantRepository.save(RestaurantMapper.map(restaurantDto)));
     }
 
-    @DeleteMapping(value = "/admin/restaurants/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/admin/restaurants/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         log.info("delete {}", id);

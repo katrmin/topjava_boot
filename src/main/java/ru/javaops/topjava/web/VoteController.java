@@ -71,11 +71,11 @@ public class VoteController {
             vote.setRestaurant(RestaurantMapper.map(voteDto.getRestaurant()));
             return VoteMapper.mapToDto(voteRepository.save(vote));
         } else {
-            throw new IllegalRequestDataException("User can't vote today yet!");
+            throw new IllegalRequestDataException("User can't vote or hasn't voted yet today!");
         }
     }
 
-    @DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         log.info("delete {}", id);
